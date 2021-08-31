@@ -1,20 +1,17 @@
 import React from "react";
 import { Option } from "./Option";
 
-const Category = ({ title, products }) => {
+const Category = ({ title, products, changeItemQuantity }) => {
+
   return (
-    <div class="category">
+    <div className="category">
       <h1>{title}</h1>
-      <ul class="options">
-        {products.map((product) => (
+      <ul className="options">
+        {products.map((product, index) => (
           <Option
-            id={product.id}
-            name={product.name}
-            description={product.description}
-            className={product.className}
-            price={product.price}
-            img={product.img}
-            alt={product.alt} />
+            key={index}
+            changeItemQuantity={changeItemQuantity}
+            product={product} />
         ))}
       </ul>
     </div>

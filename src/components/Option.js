@@ -1,17 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 
-const Option = ({ id, name, description, className, price, img, alt }) => {
+const Option = ({ product, changeItemQuantity }) => {
+
+  const { id, name, description, className, price, img, alt, quantity } = product;
+
+  const [selected, setSelected] = useState(className);
+
+  const selectThisItem = () => {
+
+    if (selected === className) {
+      setSelected(`${className} selected`);
+      changeItemQuantity(product, quantity + 1);
+    } else {
+      setSelected(className)
+      changeItemQuantity(product, 0);
+    }
+  }
+
+  const decrementThisItem = (event) => {
+    event.stopPropagation();
+
+    if (quantity < 1) {
+      setSelected(className);
+      changeItemQuantity(product, 0);
+    } else {
+      changeItemQuantity(product, quantity - 1);
+    }
+  }
+
+  const incrementThisItem = (event) => {
+    event.stopPropagation();
+    changeItemQuantity(product, quantity + 1);
+  }
+
   return (
-    <li id={id} className={className}>
+    <li id={id} className={selected} onClick={selectThisItem}>
       <img src={img} className="image" alt={alt} />
       <h2>{name}</h2>
       <p>{description}</p>
-      <div class="price-area">
+      <div className="price-area">
         <strong>R$ {price}</strong>
-        <div className="">
-          <button className="minus">-</button>
-          <strong>0</strong>
-          <button className="plus">+</button>
+        <div className={selected.includes("selected") ? "" : "hidden"}>
+          <button className="minus" onClick={(event) => decrementThisItem(event)}>-</button>
+          <strong>{quantity}</strong>
+          <button className="plus" onClick={(event) => incrementThisItem(event)}>+</button>
         </div>
       </div>
     </li >
