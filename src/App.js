@@ -164,7 +164,7 @@ const App = () => {
               changeItemQuantity={changeItemQuantity} />
           ))}
         </main>
-        <Footer />
+        <Footer categories={categories} />
       </div>
     </>
   );
